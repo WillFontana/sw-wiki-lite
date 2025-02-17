@@ -42,8 +42,8 @@ const Dashboard: React.FC = () => {
 
   return (
     <StyledDashboard>
-      {categorizedMovies[selectedEra].map((movie) => (
-        <MovieCard key={movie.episode_id} {...movie}  />
+      {categorizedMovies[selectedEra].map((movie, index) => (
+        <MovieCard key={movie.episode_id} {...movie} delay={index}  />
       ))}
     </StyledDashboard>
   );

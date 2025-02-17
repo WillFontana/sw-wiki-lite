@@ -50,7 +50,7 @@ const Header: React.FC = () => {
             $active={selectedEra === "prequels"}
             onClick={() => handleSelectEra("prequels")}
           >
-            <img src={cloneIcon} /> <p>A guerra dos clones</p>
+            <img src={cloneIcon} /> <p>The clone wars</p>
           </StyledNavItem>
 
           <StyledReturn $animation={animation} onClick={handleBack}>
@@ -62,7 +62,7 @@ const Header: React.FC = () => {
             $active={selectedEra === "classic"}
             onClick={() => handleSelectEra("classic")}
           >
-            <img src={trooperIcon} /> <p>O império galático</p>
+            <img src={trooperIcon} /> <p>The galatic empire</p>
           </StyledNavItem>
         </ul>
       </StyledNav>

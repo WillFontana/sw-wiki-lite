@@ -1,10 +1,18 @@
 import React from "react";
 import { IMovie } from "../../../store/slices/moviesApi";
-import { StyledMovieBanner, StyledMovieCard } from "./styles";
+import {
+  StyledMovieBanner,
+  StyledMovieCard,
+  StyledMovieOverlay,
+} from "./styles";
 import { useNavigate } from "react-router-dom";
 import moviesBanners from "../../../utils/moviesBanners";
 
-const MovieCard: React.FC<IMovie> = ({ title, episode_id }) => {
+interface IMovieCard extends IMovie {
+  delay: number
+}
+
+const MovieCard: React.FC<IMovieCard> = ({ title, episode_id, delay }) => {
   const navigate = useNavigate();
 
   const handleSelectMovie = () => {
@@ -12,11 +20,16 @@ const MovieCard: React.FC<IMovie> = ({ title, episode_id }) => {
   };
 
   return (
-    <StyledMovieCard onClick={handleSelectMovie}>
-      Star Wars episode {episode_id}: {title}
+    <StyledMovieCard $delay={delay} onClick={handleSelectMovie}>
       <StyledMovieBanner
         style={{ backgroundImage: `url(${moviesBanners[episode_id]})` }}
       />
+      <StyledMovieOverlay>
+        <h2>
+          Star Wars: <br /> <span>{title}</span>
+        </h2>
+        <p>See movie details</p>
+      </StyledMovieOverlay>
     </StyledMovieCard>
   );
 };

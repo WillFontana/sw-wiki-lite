@@ -5,6 +5,7 @@ export const StyledDashboard = styled.section`
   grid-template-columns: repeat(3, 1fr);
   gap: 70px;
   justify-content: center;
+  margin-top: 60px;
 
   @media (max-width: 900px) {
     grid-template-columns: repeat(2, 1fr);
