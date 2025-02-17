@@ -5,6 +5,7 @@ import MovieCard from "../../components/Cards/MovieCard";
 import { RootState } from "../../store";
 import { useGetMoviesQuery } from "../../store/slices/moviesApi";
 import { StyledDashboard } from "./styles";
+import Loader from "../../components/Frames/Loader";
 
 const Dashboard: React.FC = () => {
   const selectedEra = useSelector((state: RootState) => state.era.selectedEra);
@@ -35,7 +36,7 @@ const Dashboard: React.FC = () => {
     console.log(categorizedMovies);
   }, [categorizedMovies]);
 
-  if (isLoading) return <>Loading</>;
+  if (isLoading) return <Loader />;
   if (isError) return <>Erro ao carregar os filmes</>;
   if (!movies?.results.length) return <>Nenhum filme disponível</>;
 

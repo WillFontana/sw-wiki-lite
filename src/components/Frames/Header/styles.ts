@@ -1,5 +1,32 @@
 import styled, { css, keyframes } from "styled-components";
 
+
+const introAnimation = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  45% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const leavingAnimation = keyframes`
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+`;
+
 export const StyledHeader = styled.header`
   padding: 40px 0;
   overflow: hidden;
@@ -34,7 +61,7 @@ export const StyledNavItem = styled.li<{
 
   p {
     font-size: 21px;
-    font-family: "Orbitron", sans-serif;
+    font-family: "Audiowide", sans-serif;
     color: #fff;
     text-shadow: 0 0 5px
       ${({ $side }) => ($side === "light" ? "#00aaff" : "#ff4444")};
@@ -66,32 +93,6 @@ export const StyledNavItem = styled.li<{
           0 0 40px ${$side === "light" ? "#0077bb" : "#aa1111"} !important;
       }
     `}
-`;
-
-const introAnimation = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-  45% {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const leavingAnimation = keyframes`
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-100%);
-  }
 `;
 
 export const StyledReturn = styled.button<{ $animation?: "intro" | "leaving" }>`
