@@ -18,6 +18,7 @@ import {
   StyledSkipButton,
 } from "./styles";
 import SmallLoader from "../../components/Frames/SmallLoader";
+import NotFound from "../NotFound";
 
 const MovieDetails: React.FC = () => {
   const { id } = useParams();
@@ -34,7 +35,7 @@ const MovieDetails: React.FC = () => {
 
   const handleSkip = () => {
     setEnableInfo(true);
-  }
+  };
 
   useEffect(
     function getCharacters() {
@@ -64,6 +65,10 @@ const MovieDetails: React.FC = () => {
     [movie]
   );
 
+  useEffect(() => {
+    console.log(movie);
+  }, [movie]);
+
   useEffect(
     function renderContent() {
       if (!enableInfo) {
@@ -76,8 +81,12 @@ const MovieDetails: React.FC = () => {
   );
 
   if (isLoading) return <Loader />;
-  if (isError || !movie) return <p>Filme não encontrado</p>;
-
+  if (isError)
+    return <NotFound type="error" title="Oops! Looks like an error occured!" />;
+  if (!movie)
+    return (
+      <NotFound type="empty" title="Movie not avaliable for the momment!" />
+    );
   return (
     <StyledMovieDetails>
       <StyledMovieInfoContainer>
@@ -137,7 +146,11 @@ const MovieDetails: React.FC = () => {
       ) : (
         <></>
       )}
-      {!enableInfo ? <StyledSkipButton onClick={handleSkip}>Skip intro</StyledSkipButton> : <></>}
+      {!enableInfo ? (
+        <StyledSkipButton onClick={handleSkip}>Skip intro</StyledSkipButton>
+      ) : (
+        <></>
+      )}
     </StyledMovieDetails>
   );
 };

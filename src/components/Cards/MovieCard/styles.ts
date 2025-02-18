@@ -51,7 +51,7 @@ export const StyledMovieCard = styled.a<{$delay: number}>`
   cursor: pointer;
   position: relative;
   width: 350px;
-  height: 550px;
+  height: 530px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0px 0px 5px #0077bb44;

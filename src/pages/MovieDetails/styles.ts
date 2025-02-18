@@ -90,7 +90,7 @@ export const StyledMovieInfoContainer = styled.div`
 
 export const StyledMovieBanner = styled.div`
   min-width: 350px;
-  height: 550px;
+  height: 530px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

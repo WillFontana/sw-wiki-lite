@@ -4,52 +4,72 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Input from "../../components/Form/Input";
 import Password from "../../components/Form/Password";
-import { LoginContainer, LoginCard, LoginTitle, LoginButton } from "./styles";
+import { LoginContainer, LoginCard, LoginTitle } from "./styles";
+import { loginUser } from "../../services/authService";
+import { useLocation, useNavigate } from "react-router-dom";
+import SwitchAuthButton from "../../components/Buttons/SwitchAuthButton";
+import Button from "../../components/Buttons/Button";
 
 const loginSchema = z.object({
-  email: z.string().email("E-mail inválido").nonempty("E-mail obrigatório"),
+  email: z.string().email("Invalid email").nonempty("Email is required"),
   userPassword: z
     .string()
-    .min(6, "A senha deve ter no mínimo 6 caracteres")
-    .regex(/[A-Za-z]/, "A senha deve ter pelo menos uma letra")
-    .regex(/[0-9]/, "A senha deve ter pelo menos um número")
-    .regex(/[\W_]/, "A senha deve ter pelo menos um símbolo"),
+    .min(6, "Password must be at least 6 characters long")
+    .regex(/[A-Za-z]/, "Password must contain at least one letter")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(/[\W_]/, "Password must contain at least one symbol"),
 });
 
 type LoginForm = z.infer<typeof loginSchema>;
 
 const Login: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const prefilledEmail = location.state?.email || "";
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: prefilledEmail,
+    },
   });
 
   const onSubmit = (data: LoginForm) => {
-    console.log("Dados do formulário:", data);
+    const response = loginUser(data.email, data.userPassword);
+
+    if (response.success) {
+      navigate("/");
+    } else {
+      alert(response.message);
+    }
   };
 
   return (
     <LoginContainer>
       <LoginCard>
-        <LoginTitle>Entrar</LoginTitle>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <LoginTitle>Login</LoginTitle>
+        <form style={{ marginTop: 20 }} onSubmit={handleSubmit(onSubmit)}>
           <Input
             label="E-mail"
-            placeholder="Digite seu e-mail"
+            placeholder="yourbestemail@mail.com"
             type="email"
             error={errors.email?.message}
             {...register("email")}
           />
           <Password
-            label="Senha"
-            placeholder="Digite sua senha"
+            style={{ marginTop: 20 }}
+            label="Password"
+            placeholder="Insert password"
             error={errors.userPassword?.message}
             {...register("userPassword")}
           />
-          <LoginButton type="submit">Acessar</LoginButton>
+          <Button type="submit">Acessar</Button>
+
+          <SwitchAuthButton url="/register">Register</SwitchAuthButton>
         </form>
       </LoginCard>
     </LoginContainer>

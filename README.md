@@ -1,50 +1,78 @@
-# React + TypeScript + Vite
+# Star Wars Wiki Lite - Frontend Challenge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bem-vindo ao **Star Wars Wiki Lite**, o projeto desenvolvido para o teste técnico Minha Casa Construida.  
+Este app permite explorar informações sobre os filmes e personagens do universo Star Wars, utilizando a API pública **SWAPI**.
 
-Currently, two official plugins are available:
+O app foi desenvolvido com foco no uso em desktop, especialmente devido às animações personalizadas e à ênfase em demonstrar competências técnicas. O objetivo principal foi destacar habilidades como lógica de programação, consumo de APIs e a implementação de recursos avançados de front-end.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Preciso dizer que foi uma experiência muito divertida e gratificante criar este projeto. Poder trabalhar com um tema que eu gosto tanto (Star Wars) tornou o processo ainda mais legal. Além disso, foi ótimo poder explorar tecnologias modernas, que muitas vezes são difíceis de encontrar em projetos mais legados.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Tecnologias Utilizadas
 
-- Configure the top-level `parserOptions` property like this:
+O projeto foi desenvolvido com as seguintes tecnologias e ferramentas:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- **React.js** - Biblioteca para construção da interface
+- **Styled Components** - Estilização com temas dinâmicos
+- **React Router DOM** - Gerenciamento de rotas
+- **Redux Toolkit** - Gerenciamento de estado global
+- **React Hook Form** - Manipulação de formulários
+- **Zod** - Validação de dados nos formulários
+- **TypeScript** - Tipagem estática e segurança no código
+- **Day.js** - Manipulação de datas
+- **LocalStorage** - Simulação de login sem backend
+
+---
+
+## API Utilizada
+
+Utilizamos a **SWAPI (Star Wars API)** para obter dados sobre os filmes e personagens:
+
+🔗 **API Oficial:** [https://swapi.dev](https://swapi.dev)  
+
+Endpoints principais utilizados:
+
+- `/films/` - Lista todos os filmes
+- `/films/:id` - Detalhes de um filme específico
+- `/people/` - Lista todos os personagens
+- `/people/:id` - Detalhes de um personagem específico
+
+---
+
+## Funcionalidades Implementadas
+
+[x] **Página Inicial:** Lista os filmes do Star Wars, categorizados por era (Prequels, Trilogia Clássica e Sequels).  
+[x] **Detalhes do Filme:** Ao clicar em um filme, são exibidas suas informações, incluindo personagens e naves associadas.  
+[x] **Detalhes do Personagem:** Permite visualizar dados detalhados dos personagens, como planeta natal, veículos e filmes em que aparecem.  
+[x] **Cadastro de Usuário:** Simulado com `localStorage`, permitindo que novos usuários sejam registrados.  
+[x] **Login de Usuário:** Valida os dados cadastrados e gera um token fake no `localStorage` para simular autenticação.  
+[x] **Tema Dinâmico:** O sistema foi refatorado para utilizar `Styled Components` com `ThemeProvider`, facilitando a manutenção.  
+[x] **Efeitos Visuais:** Animações de entrada, hover, neon effects e um loader inspirado nos sabres de luz.  
+
+---
+
+## Rodando o projeto?
+
+### Clonar o Repositório
+
+```sh
+git clone https://github.com/seu-usuario/star-wars-explorer.git
+cd star-wars-explorer
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Instalar dependências
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```sh
+yarn install | npm install
 ```
+
+### Rodar a Aplicação
+
+```sh
+yarn dev | npm run dev
+```
+
+### Acessar a Aplicação
+
+Acesse <http://localhost:5173> no navegador.

@@ -16,6 +16,7 @@ import {
   StyledVehicles,
 } from "./styles";
 import SmallLoader from "../../components/Frames/SmallLoader";
+import NotFound from "../NotFound";
 
 interface IFilm {
   title: string;
@@ -110,15 +111,16 @@ const CharacterDetails: React.FC = () => {
     }
   }, [character]);
 
-  if (isError) return <>Ocorreu um erro ao pegar os dados do personagem</>;
+  if (isError) return <NotFound title="Oops! Looks like an error occured!" type="error" />;
   if (isLoading) return <Loader />;
-  if (!character) return <div>O personagem não está disponível</div>;
+  if (!character) return <NotFound title="Character not avaliable for the momment!" type="empty" />;
 
   return (
     <StyledCharacterDetails>
       <StyledHeadline>
         <StyledPicture>
-          <p>No data</p>
+          {/* Como não retornamos nenhuma imagem da api vou deixar esse no data pra ficar um efeito legal hehehe */}
+          <p>No data</p> 
         </StyledPicture>
 
         <div>

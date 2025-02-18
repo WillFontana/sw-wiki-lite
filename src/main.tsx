@@ -8,12 +8,18 @@ import "./styles/reset.css";
 import App from "./App.tsx";
 
 import { store } from "./store";
+import { theme } from "./styles/theme.ts";
+import { ThemeProvider } from "styled-components";
+import SkyParallax from "./components/Frames/SkyParallax/index.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <GlobalStyles />
-      <App />
+      <ThemeProvider theme={theme}>
+        <SkyParallax />
+        <GlobalStyles />
+        <App />
+      </ThemeProvider>
     </Provider>
   </StrictMode>
 );

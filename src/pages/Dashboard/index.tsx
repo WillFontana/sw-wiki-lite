@@ -1,11 +1,12 @@
 import dayjs from "dayjs";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import MovieCard from "../../components/Cards/MovieCard";
 import { RootState } from "../../store";
 import { useGetMoviesQuery } from "../../store/slices/moviesApi";
 import { StyledDashboard } from "./styles";
 import Loader from "../../components/Frames/Loader";
+import NotFound from "../NotFound";
 
 const Dashboard: React.FC = () => {
   const selectedEra = useSelector((state: RootState) => state.era.selectedEra);
@@ -32,18 +33,18 @@ const Dashboard: React.FC = () => {
     );
   }, [movies]);
 
-  useEffect(() => {
-    console.log(categorizedMovies);
-  }, [categorizedMovies]);
-
+  if (isError)
+    return <NotFound title="Looks like an error occured!" type="error" />;
   if (isLoading) return <Loader />;
-  if (isError) return <>Erro ao carregar os filmes</>;
-  if (!movies?.results.length) return <>Nenhum filme disponível</>;
+  if (!movies?.results.length)
+    return (
+      <NotFound title="No movies avaliabe for the momment!" type="empty" />
+    );
 
   return (
     <StyledDashboard>
       {categorizedMovies[selectedEra].map((movie, index) => (
-        <MovieCard key={movie.episode_id} {...movie} delay={index}  />
+        <MovieCard key={movie.episode_id} {...movie} delay={index} />
       ))}
     </StyledDashboard>
   );

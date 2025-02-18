@@ -60,12 +60,14 @@ const Input = forwardRef<HTMLInputElement, IInputProps>(
           required={required}
           maxLength={maxLength}
           placeholder={placeholder}
+          $error={Boolean(error)}
           onChange={onChange}
           onBlur={onBlur}
         />
         {error && <StyledInputError>{error}</StyledInputError>}
         {action && (
           <StyledInputAction
+            $error={Boolean(error)}
             $position={action.position}
             onClick={(e) => {
               e.preventDefault();
