@@ -14,7 +14,7 @@ const CharacterCard: React.FC<ICharacter> = ({ name, id }) => {
 
   return (
     <StyledCharacterCard onClick={handleSelectCharacter}>
-      {name}
+      <p>{name}</p>
     </StyledCharacterCard>
   );
 };

@@ -48,6 +48,7 @@ export const StyledNavItem = styled.li<{
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 280px;
   cursor: pointer;
   > * {
     transition: all ease-in-out 0.2s;
@@ -100,6 +101,9 @@ export const StyledReturn = styled.button<{ $animation?: "intro" | "leaving" }>`
   width: ${({ $animation }) => ($animation ? "100px" : "0px")};
   overflow: visible;
   transition: all ease-in-out 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   img {
     min-width: 60px;
     max-width: 60px;
