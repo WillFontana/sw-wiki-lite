@@ -15,6 +15,7 @@ import {
   StyledMovieBanner,
   StyledMovieDetails,
   StyledMovieInfoContainer,
+  StyledSkipButton,
 } from "./styles";
 import SmallLoader from "../../components/Frames/SmallLoader";
 
@@ -30,6 +31,10 @@ const MovieDetails: React.FC = () => {
 
   const [charactersLoading, setCharactersLoading] = useState<boolean>(false);
   const [characters, setCharacters] = useState<ICharacter[]>([]);
+
+  const handleSkip = () => {
+    setEnableInfo(true);
+  }
 
   useEffect(
     function getCharacters() {
@@ -61,9 +66,11 @@ const MovieDetails: React.FC = () => {
 
   useEffect(
     function renderContent() {
-      setTimeout(() => {
-        setEnableInfo(true);
-      }, 16000);
+      if (!enableInfo) {
+        setTimeout(() => {
+          setEnableInfo(true);
+        }, 16000);
+      }
     },
     [movie]
   );
@@ -126,11 +133,11 @@ const MovieDetails: React.FC = () => {
               <></>
             )}
           </StyledCharactersList>
-          )
         </StyledCharacterContainer>
       ) : (
         <></>
       )}
+      {!enableInfo ? <StyledSkipButton onClick={handleSkip}>Skip intro</StyledSkipButton> : <></>}
     </StyledMovieDetails>
   );
 };

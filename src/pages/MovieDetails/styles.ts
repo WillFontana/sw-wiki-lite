@@ -1,5 +1,12 @@
 import styled, { keyframes } from "styled-components";
 
+const saberGlow = keyframes`
+  0% { box-shadow: 0px 0px 5px #0077ff; } 
+  33% { box-shadow: 0px 0px 5px #00ff00; }
+  66% { box-shadow: 0px 0px 5px #ff0000; }
+  100% { box-shadow: 0px 0px 5px #0077ff; }
+`;
+
 const bannerAnimation = keyframes`
   from {
     opacity: 0;
@@ -116,4 +123,26 @@ export const StyledCharactersList = styled.div`
   justify-content: center;
   margin: 20px 40px 0;
   animation: ${listAnimation} 1s ease-in-out forwards;
+`;
+
+export const StyledSkipButton = styled.button`
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background: transparent;
+  border: 2px solid white;
+  cursor: pointer;
+  border-radius: 8px;
+  min-width: 200px;
+  transition: all 0.3s ease-in-out;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  margin: 40px auto;
+  &:hover {
+    animation: ${saberGlow} 1s linear infinite;
+  }
 `;
