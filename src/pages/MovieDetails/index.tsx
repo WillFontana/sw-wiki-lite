@@ -11,10 +11,12 @@ import moviesBanners from "../../utils/moviesBanners";
 import {
   StyledCharacterContainer,
   StyledCharactersList,
+  StyledLoaderContaier,
   StyledMovieBanner,
   StyledMovieDetails,
   StyledMovieInfoContainer,
 } from "./styles";
+import SmallLoader from "../../components/Frames/SmallLoader";
 
 const MovieDetails: React.FC = () => {
   const { id } = useParams();
@@ -26,26 +28,36 @@ const MovieDetails: React.FC = () => {
 
   const [enableInfo, setEnableInfo] = useState<boolean>(false);
 
+  const [charactersLoading, setCharactersLoading] = useState<boolean>(false);
   const [characters, setCharacters] = useState<ICharacter[]>([]);
 
-  useEffect(() => {
-    if (!movie?.characters) return;
+  useEffect(
+    function getCharacters() {
+      if (!movie?.characters) return;
+      const fetchCharacters = async () => {
+        setCharactersLoading(true);
+        try {
+          const characterPromises = movie.characters.map(async (url) => {
+            const response = await fetch(url);
+            const data = await response.json();
+            const id = url.split("/").slice(-2, -1)[0];
 
-    const fetchCharacters = async () => {
-      const characterPromises = movie.characters.map(async (url) => {
-        const response = await fetch(url);
-        const data = await response.json();
-        const id = url.split("/").slice(-2, -1)[0];
+            return { ...data, id };
+          });
 
-        return { ...data, id };
-      });
+          const characterData = await Promise.all(characterPromises);
+          setCharacters(characterData);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setCharactersLoading(false);
+        }
+      };
 
-      const characterData = await Promise.all(characterPromises);
-      setCharacters(characterData);
-    };
-
-    fetchCharacters();
-  }, [movie]);
+      fetchCharacters();
+    },
+    [movie]
+  );
 
   useEffect(
     function renderContent() {
@@ -62,6 +74,15 @@ const MovieDetails: React.FC = () => {
   return (
     <StyledMovieDetails>
       <StyledMovieInfoContainer>
+        {!enableInfo ? (
+          <OpeningCrawl
+            episode={`Episode ${handleMovieSimbol(Number(id))}`}
+            crawl={movie.opening_crawl}
+            title={movie.title}
+          />
+        ) : (
+          <></>
+        )}
         {enableInfo ? (
           <>
             <StyledMovieBanner
@@ -85,27 +106,24 @@ const MovieDetails: React.FC = () => {
         ) : (
           <></>
         )}
-
-        {!enableInfo ? (
-          <OpeningCrawl
-            episode={`Episode ${handleMovieSimbol(Number(id))}`}
-            crawl={movie.opening_crawl}
-            title={movie.title}
-          />
-        ) : (
-          <></>
-        )}
       </StyledMovieInfoContainer>
       {enableInfo ? (
         <StyledCharacterContainer>
           <h2>Main characters</h2>
+          {charactersLoading && !characters.length ? (
+            <StyledLoaderContaier>
+              <SmallLoader />
+            </StyledLoaderContaier>
+          ) : (
+            <></>
+          )}
           <StyledCharactersList>
-            {characters.length === 0 ? (
-              <p>Carregando personagens...</p>
-            ) : (
+            {characters.length > 0 ? (
               characters.map((character) => (
                 <CharacterCard key={character.name} {...character} />
               ))
+            ) : (
+              <></>
             )}
           </StyledCharactersList>
           )

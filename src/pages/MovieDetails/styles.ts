@@ -102,6 +102,13 @@ export const StyledCharacterContainer = styled.div`
   }
 `;
 
+export const StyledLoaderContaier = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin: 20px 0;
+`;
+
 export const StyledCharactersList = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
