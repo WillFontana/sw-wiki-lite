@@ -30,6 +30,7 @@ const leavingAnimation = keyframes`
 export const StyledHeader = styled.header`
   padding: ${({ theme }) => theme.spacing.large} 0;
   overflow: hidden;
+  position: relative;
 `;
 
 export const StyledNav = styled.nav`
@@ -141,4 +142,13 @@ export const StyledReturn = styled.button<{ $animation?: "intro" | "leaving" }>`
       transform: scale(1.05);
     }
   }
+`;
+
+export const StyledLogoutButton = styled.button`
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.secondary};
+  background-color: transparent;
+  position: absolute;
+  right: 0px;
+  top: 60px;
 `;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { SignOut } from "phosphor-react";
 
 import { RootState } from "../../../store";
 import { setEra } from "../../../store/slices/eraSlice";
@@ -9,8 +10,14 @@ import cloneIcon from "../../../assets/icons/clone.png";
 import shipIcon from "../../../assets/icons/naboo-ship.png";
 import trooperIcon from "../../../assets/icons/stormtrooper.png";
 
-import { StyledHeader, StyledNav, StyledNavItem, StyledReturn } from "./styles";
-
+import {
+  StyledHeader,
+  StyledLogoutButton,
+  StyledNav,
+  StyledNavItem,
+  StyledReturn,
+} from "./styles";
+import { logoutUser } from "../../../services/authService";
 
 interface EraOption {
   key: "prequels" | "classic";
@@ -36,6 +43,11 @@ const Header: React.FC = React.memo(() => {
       setAnimation(undefined);
     }, 300);
   };
+
+  const handleLogout = () => {
+    logoutUser();
+    navigate("/login");
+  }
 
   const handleSelectEra = (era: "prequels" | "classic") => {
     if (location.pathname !== "/") {
@@ -100,6 +112,9 @@ const Header: React.FC = React.memo(() => {
           </StyledNavItem>
         </ul>
       </StyledNav>
+      <StyledLogoutButton onClick={handleLogout}>
+        <SignOut size={32} />
+      </StyledLogoutButton>
     </StyledHeader>
   );
 });

@@ -1,6 +1,17 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { StyledButton } from "../../components/Buttons/Button/styles";
 import { StyledInputWrapper } from "../../components/Form/Input/styles";
+
+const renderAnimation = keyframes`
+  from {
+    opacity: 0;
+    transform: scale(.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+`;
 
 export const LoginContainer = styled.div`
   display: flex;
@@ -15,6 +26,7 @@ export const LoginContainer = styled.div`
 `;
 
 export const LoginCard = styled.div`
+  animation: ${renderAnimation} 0.8s ease-out forwards;
   background: rgba(255, 255, 255, 0.05);
   padding: ${({ theme }) => theme.spacing.large};
   border-radius: ${({ theme }) => theme.radius.medium};
