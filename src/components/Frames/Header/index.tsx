@@ -72,21 +72,29 @@ const Header: React.FC = React.memo(() => {
     <StyledHeader>
       <StyledNav>
         <ul>
-          {eras.map(({ key, label, icon, side }) => (
-            <StyledNavItem
-              key={key}
-              $side={side}
-              $active={selectedEra === key}
-              onClick={() => handleSelectEra(key)}
-            >
-              <img src={icon} alt={`${label} Icon`} />
-              <p>{label}</p>
-            </StyledNavItem>
-          ))}
+          <StyledNavItem
+            key={eras[0].key}
+            $side={eras[0].side}
+            $active={selectedEra === eras[0].key}
+            onClick={() => handleSelectEra(eras[0].key)}
+          >
+            <img src={eras[0].icon} alt={`${eras[0].label} Icon`} />
+            <p>{eras[0].label}</p>
+          </StyledNavItem>
 
           <StyledReturn $animation={animation} onClick={handleBack}>
             <img src={shipIcon} alt="Return Icon" aria-label="Go back" />
           </StyledReturn>
+
+          <StyledNavItem
+            key={eras[1].key}
+            $side={eras[1].side}
+            $active={selectedEra === eras[1].key}
+            onClick={() => handleSelectEra(eras[1].key)}
+          >
+            <img src={eras[1].icon} alt={`${eras[1].label} Icon`} />
+            <p>{eras[1].label}</p>
+          </StyledNavItem>
         </ul>
       </StyledNav>
     </StyledHeader>

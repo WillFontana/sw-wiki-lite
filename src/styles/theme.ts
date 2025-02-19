@@ -27,7 +27,7 @@ export const theme = {
   },
 
   textSizes: {
-    small: "12px",
+    small: "14px",
     normal: "16px",
     medium: "21px",
     large: "24px",

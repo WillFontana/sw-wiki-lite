@@ -10,38 +10,40 @@ const glitchRGB = keyframes`
 `;
 
 export const StyledCharacterDetails = styled.div`
-  background: rgba(255, 255, 255, 0.05);
+  background: ${({ theme }) => theme.colors.overlay};
   backdrop-filter: blur(10px);
-  border-radius: 16px;
-  padding: 28px;
+  border-radius: ${({ theme }) => theme.radius.large};
+  padding: ${({ theme }) => theme.spacing.large};
   max-width: 900px;
-  margin: 40px auto 40px;
-  box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
-  text-align: left;
+  margin: ${({ theme }) => theme.spacing.large} auto;
   border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
+
+  text-align: left;
   h2 {
-    font-family: "Audiowide", sans-serif;
-    color: #ffe81f;
-    font-size: 22px;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    font-family: ${({ theme }) => theme.fonts.secondary};
+    color: ${({ theme }) => theme.colors.textHighlight};
+    font-size: ${({ theme }) => theme.textSizes.large};
+    margin-top: ${({ theme }) => theme.spacing.medium};
+    margin-bottom: ${({ theme }) => theme.spacing.small};
   }
 `;
 
 export const StyledPicture = styled.div`
   width: 165px;
   height: 165px;
-  background: #888;
-  border-radius: 8px;
+  background: ${({ theme }) => theme.colors.textSecondary};
+  border-radius: ${({ theme }) => theme.radius.medium};
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
+
   p {
     transform: rotate(-45deg);
-    color: red;
-    font-size: 24px;
+    color: ${({ theme }) => theme.colors.secondary};
+    font-size: ${({ theme }) => theme.textSizes.medium};
     opacity: 0.5;
     animation: ${glitchRGB} 0.3s infinite ease-in-out;
   }
@@ -49,16 +51,19 @@ export const StyledPicture = styled.div`
 
 export const StyledHeadline = styled.div`
   display: flex;
+  
   div {
-    margin-left: 40px;
+    margin-left: ${({ theme }) => theme.spacing.large};
   }
+
   ${StyledPicture} {
-    margin-left: 0px;
+    margin-left: 0;
   }
+
   h2 {
-    font-family: "Audiowide", sans-serif;
-    color: #ffe81f;
-    font-size: 32px;
+    font-family: ${({ theme }) => theme.fonts.secondary};
+    color: ${({ theme }) => theme.colors.textHighlight};
+    font-size: ${({ theme }) => theme.textSizes.xlarge};
     margin-top: -11px;
   }
 `;
@@ -66,19 +71,20 @@ export const StyledHeadline = styled.div`
 export const StyledInfoContainer = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  margin-top: 10px;
+  gap: ${({ theme }) => theme.spacing.medium};
+  margin-top: ${({ theme }) => theme.spacing.small};
 `;
 
 export const StyledInfo = styled.li`
   h3 {
-    font-family: "Audiowide", sans-serif;
-    font-size: 16px;
-    color: #afafaf;
+    font-family: ${({ theme }) => theme.fonts.secondary};
+    font-size: ${({ theme }) => theme.textSizes.normal};
+    color: ${({ theme }) => theme.colors.textSecondary};
   }
+
   p {
-    font-size: 16px;
-    color: #fafafa;
+    font-size: ${({ theme }) => theme.textSizes.normal};
+    color: ${({ theme }) => theme.colors.textPrimary};
     text-transform: capitalize;
   }
 `;
@@ -86,50 +92,53 @@ export const StyledInfo = styled.li`
 export const StyledVehicles = styled.ul`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin-top: 10px;
-  border-bottom: 1px solid #afafaf;
-  div + div {
-  }
+  margin-top: ${({ theme }) => theme.spacing.small};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.textSecondary};
+
   h3 {
-    font-family: "Audiowide", sans-serif;
-    color: #afafaf;
-    font-size: 18px;
+    font-family: ${({ theme }) => theme.fonts.secondary};
+    color: ${({ theme }) => theme.colors.textSecondary};
+    font-size: ${({ theme }) => theme.textSizes.normal};
   }
+
   h4 {
-    font-family: "Audiowide", sans-serif;
-    color: #afafaf;
-    font-size: 16px;
-    margin-top: 5px;
+    font-family: ${({ theme }) => theme.fonts.secondary};
+    color: ${({ theme }) => theme.colors.textSecondary};
+    font-size: ${({ theme }) => theme.textSizes.normal};
+    margin-top: ${({ theme }) => theme.spacing.small};
   }
+
   p {
-    font-size: 14px;
-    color: #fff;
+    font-size: ${({ theme }) => theme.textSizes.small};
+    color: ${({ theme }) => theme.colors.textPrimary};
   }
 `;
 
 export const StyledVehicle = styled.li`
-  margin-bottom: 20px;
+  margin-bottom: ${({ theme }) => theme.spacing.medium};
 `;
 
 export const StyledFeaturedMovies = styled.ul`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: ${({ theme }) => theme.spacing.medium};
 `;
 
 export const StyledFeaturedMovie = styled.li`
   cursor: pointer;
 
   > p {
-    color: #fff;
-    font-size: 16px;
+    color: ${({ theme }) => theme.colors.textPrimary};
+    font-size: ${({ theme }) => theme.textSizes.normal};
     transition: all ease-in-out 0.2s;
   }
 
   &:hover {
     > p {
-      color: #00ff00;
-      text-shadow: 0 0 5px #00ff00, 0 0 10px #00cc00, 0 0 15px #008800;
+      color: ${({ theme }) => theme.colors.glowGreen};
+      text-shadow: 0 0 5px ${({ theme }) => theme.colors.glowGreen},
+        0 0 10px ${({ theme }) => theme.colors.greenDark},
+        0 0 15px ${({ theme }) => theme.colors.greenDarker};
     }
   }
 `;
@@ -138,5 +147,5 @@ export const StyledLoaderContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
-  margin: 20px 0;
+  margin: ${({ theme }) => theme.spacing.medium} 0;
 `;

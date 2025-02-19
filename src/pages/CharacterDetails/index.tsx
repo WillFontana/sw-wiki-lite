@@ -50,77 +50,72 @@ const CharacterDetails: React.FC = () => {
     isLoading,
   } = useGetCharacterByIdQuery(Number(id));
 
-  const [films, setFilms] = useState<{ content: IFilm[]; isLoading: boolean }>({
-    content: [],
-    isLoading: false,
-  });
-
-  const [starships, setStarships] = useState<{
-    content: IShip[];
-    isLoading: boolean;
-  }>({
-    content: [],
-    isLoading: false,
-  });
-
-  const [vehicles, setVehicles] = useState<{
-    content: IVehicle[];
-    isLoading: boolean;
-  }>({
-    content: [],
-    isLoading: false,
-  });
-
+  const [films, setFilms] = useState<IFilm[]>([]);
+  const [starships, setStarships] = useState<IShip[]>([]);
+  const [vehicles, setVehicles] = useState<IVehicle[]>([]);
   const [homeworld, setHomeworld] = useState<IPlanet | null>(null);
+  const [loadingState, setLoadingState] = useState({
+    films: false,
+    starships: false,
+    vehicles: false,
+  });
 
-  const handleSelectMovie = (id: number) => {
-    navigate(`/movies/${id}`);
-  };
+  const handleSelectMovie = (id: number) => navigate(`/movies/${id}`);
 
   useEffect(() => {
     if (!character) return;
 
-    if (character.films.length) {
-      setFilms((prev) => ({ ...prev, isLoading: true }));
-      fetchData(character.films).then((data) =>
-        setFilms({ content: data as IFilm[], isLoading: false })
-      );
-    }
+    const fetchAllData = async () => {
+      if (character.films.length) {
+        setLoadingState((prev) => ({ ...prev, films: true }));
+        const data = await fetchData(character.films);
+        setFilms(data as IFilm[]);
+        setLoadingState((prev) => ({ ...prev, films: false }));
+      }
 
-    if (character.starships.length) {
-      setStarships((prev) => ({ ...prev, isLoading: true }));
-      fetchData(character.starships).then((data) =>
-        setStarships({ content: data as IShip[], isLoading: false })
-      );
-    }
+      if (character.starships.length) {
+        setLoadingState((prev) => ({ ...prev, starships: true }));
+        const data = await fetchData(character.starships);
+        setStarships(data as IShip[]);
+        setLoadingState((prev) => ({ ...prev, starships: false }));
+      }
 
-    if (character.vehicles.length) {
-      setVehicles((prev) => ({ ...prev, isLoading: true }));
-      fetchData(character.vehicles).then((data) =>
-        setVehicles({ content: data as IVehicle[], isLoading: false })
-      );
-    }
+      if (character.vehicles.length) {
+        setLoadingState((prev) => ({ ...prev, vehicles: true }));
+        const data = await fetchData(character.vehicles);
+        setVehicles(data as IVehicle[]);
+        setLoadingState((prev) => ({ ...prev, vehicles: false }));
+      }
 
-    if (character.homeworld) {
-      fetch(character.homeworld)
-        .then((res) => res.json())
-        .then((data) => setHomeworld(data as IPlanet))
-        .catch((error) =>
-          console.error("Erro ao buscar planeta natal:", error)
-        );
-    }
+      if (character.homeworld) {
+        fetch(character.homeworld)
+          .then((res) => res.json())
+          .then(setHomeworld)
+          .catch((error) =>
+            console.error("Erro ao buscar planeta natal:", error)
+          );
+      }
+    };
+
+    fetchAllData();
   }, [character]);
 
-  if (isError) return <NotFound title="Oops! Looks like an error occured!" type="error" />;
+  if (isError)
+    return (
+      <NotFound title="Oops! Looks like an error occurred!" type="error" />
+    );
   if (isLoading) return <Loader />;
-  if (!character) return <NotFound title="Character not avaliable for the momment!" type="empty" />;
+  if (!character)
+    return (
+      <NotFound title="Character not avaliable for the moment!" type="empty" />
+    );
 
   return (
     <StyledCharacterDetails>
       <StyledHeadline>
         <StyledPicture>
           {/* Como não retornamos nenhuma imagem da api vou deixar esse no data pra ficar um efeito legal hehehe */}
-          <p>No data</p> 
+          <p>No data</p>
         </StyledPicture>
 
         <div>
@@ -133,7 +128,7 @@ const CharacterDetails: React.FC = () => {
             </StyledInfo>
             <StyledInfo>
               <h3>Home world</h3>
-              <p>{homeworld ? homeworld.name : "Desconhecido"}</p>
+              <p>{homeworld ? homeworld.name : "Unknown"}</p>
             </StyledInfo>
             <StyledInfo>
               <h3>Height</h3>
@@ -163,16 +158,16 @@ const CharacterDetails: React.FC = () => {
         </div>
       </StyledHeadline>
 
-      {vehicles.isLoading && (
+      {loadingState.vehicles && (
         <StyledLoaderContainer>
           <SmallLoader />
         </StyledLoaderContainer>
       )}
-      {vehicles.content.length > 0 && (
+      {vehicles.length > 0 && (
         <>
           <h2>Vehicles:</h2>
           <StyledVehicles>
-            {vehicles.content.map((vehicle) => (
+            {vehicles.map((vehicle) => (
               <StyledVehicle key={vehicle.url}>
                 <div>
                   <h3>Name</h3>
@@ -184,17 +179,16 @@ const CharacterDetails: React.FC = () => {
         </>
       )}
 
-      {starships.isLoading && (
+      {loadingState.starships && (
         <StyledLoaderContainer>
           <SmallLoader />
         </StyledLoaderContainer>
       )}
-
-      {starships.content.length > 0 && (
+      {starships.length > 0 && (
         <>
           <h2>Ships:</h2>
           <StyledVehicles>
-            {starships.content.map((ship) => (
+            {starships.map((ship) => (
               <StyledVehicle key={ship.url}>
                 <div>
                   <h3>Name</h3>
@@ -210,18 +204,16 @@ const CharacterDetails: React.FC = () => {
         </>
       )}
 
-      {films.isLoading && (
+      {loadingState.films && (
         <StyledLoaderContainer>
           <SmallLoader />
         </StyledLoaderContainer>
       )}
-
-      {films.content.length > 0 && (
+      {films.length > 0 && (
         <>
           <h2>Featured movies:</h2>
-
           <StyledFeaturedMovies>
-            {films.content.map((film) => (
+            {films.map((film) => (
               <StyledFeaturedMovie
                 key={film.url}
                 onClick={() => handleSelectMovie(film.episode_id)}
