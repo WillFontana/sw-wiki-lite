@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -25,26 +25,31 @@ type LoginForm = z.infer<typeof loginSchema>;
 const Login: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
   const prefilledEmail = location.state?.email || "";
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: prefilledEmail,
-    },
+    defaultValues: { email: prefilledEmail },
   });
 
-  const onSubmit = (data: LoginForm) => {
-    const response = loginUser(data.email, data.userPassword);
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      navigate("/");
+    }
+  }, [navigate]);
+
+  const onSubmit = async (data: LoginForm) => {
+    const response = await loginUser(data.email, data.userPassword);
 
     if (response.success) {
       navigate("/");
     } else {
-      alert(response.message);
+      console.error(response.message);
     }
   };
 
@@ -52,7 +57,7 @@ const Login: React.FC = () => {
     <LoginContainer>
       <LoginCard>
         <LoginTitle>Login</LoginTitle>
-        <form style={{ marginTop: 20 }} onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             label="E-mail"
             placeholder="yourbestemail@mail.com"
@@ -61,14 +66,14 @@ const Login: React.FC = () => {
             {...register("email")}
           />
           <Password
-            style={{ marginTop: 20 }}
             label="Password"
             placeholder="Insert password"
             error={errors.userPassword?.message}
             {...register("userPassword")}
           />
-          <Button type="submit">Acessar</Button>
-
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Loading..." : "Access"}
+          </Button>
           <SwitchAuthButton url="/register">Register</SwitchAuthButton>
         </form>
       </LoginCard>
