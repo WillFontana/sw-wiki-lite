@@ -1,6 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
 
-
 const introAnimation = keyframes`
   0% {
     opacity: 0;
@@ -10,12 +9,13 @@ const introAnimation = keyframes`
     opacity: 0;
     transform: translateY(100%);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateY(0);
   }
 `;
 
+// 🔥 Animação de saída do botão
 const leavingAnimation = keyframes`
   from {
     opacity: 1;
@@ -28,7 +28,7 @@ const leavingAnimation = keyframes`
 `;
 
 export const StyledHeader = styled.header`
-  padding: 40px 0;
+  padding: ${({ theme }) => theme.spacing.large} 0;
   overflow: hidden;
 `;
 
@@ -50,22 +50,24 @@ export const StyledNavItem = styled.li<{
   align-items: center;
   width: 280px;
   cursor: pointer;
+
   > * {
     transition: all ease-in-out 0.2s;
   }
 
   img {
     width: 60px;
-    margin-bottom: 10px;
+    margin-bottom: ${({ theme }) => theme.spacing.small};
     transition: transform 0.2s ease-in-out;
   }
 
   p {
-    font-size: 21px;
-    font-family: "Audiowide", sans-serif;
-    color: #fff;
+    font-size: ${({ theme }) => theme.textSizes.medium};
+    font-family: ${({ theme }) => theme.fonts.secondary};
+    color: ${({ theme }) => theme.colors.textPrimary};
     text-shadow: 0 0 5px
-      ${({ $side }) => ($side === "light" ? "#00aaff" : "#ff4444")};
+      ${({ theme, $side }) =>
+        $side === "light" ? theme.colors.glowBlue : theme.colors.glowRed};
   }
 
   &:hover {
@@ -75,23 +77,34 @@ export const StyledNavItem = styled.li<{
 
     p {
       text-shadow: 0 0 10px
-          ${({ $side }) => ($side === "light" ? "#00aaff" : "#ff4444")},
-        0 0 15px ${({ $side }) => ($side === "light" ? "#0088cc" : "#cc2222")};
+          ${({ theme, $side }) =>
+            $side === "light" ? theme.colors.glowBlue : theme.colors.glowRed},
+        0 0 15px
+          ${({ theme, $side }) =>
+            $side === "light" ? theme.colors.primary : theme.colors.secondary};
     }
   }
 
-  ${({ $active, $side }) =>
+  ${({ $active, $side, theme }) =>
     $active &&
     css`
       img {
         transform: scale(1.2) !important;
       }
       p {
-        color: ${$side === "light" ? "#00aaff" : "#ff4444"};
-        text-shadow: 0 0 10px ${$side === "light" ? "#00aaff" : "#ff4444"},
-          0 0 20px ${$side === "light" ? "#00aaff" : "#ff4444"},
-          0 0 30px ${$side === "light" ? "#0088cc" : "#cc2222"},
-          0 0 40px ${$side === "light" ? "#0077bb" : "#aa1111"} !important;
+        color: ${$side === "light"
+          ? theme.colors.glowBlue
+          : theme.colors.glowRed};
+        text-shadow: 0 0 10px
+            ${$side === "light" ? theme.colors.glowBlue : theme.colors.glowRed},
+          0 0 20px
+            ${$side === "light" ? theme.colors.glowBlue : theme.colors.glowRed},
+          0 0 30px
+            ${$side === "light"
+              ? theme.colors.primaryDark
+              : theme.colors.secondaryDark},
+          0 0 40px
+            ${$side === "light" ? theme.colors.primary : theme.colors.secondary} !important;
       }
     `}
 `;
@@ -99,16 +112,18 @@ export const StyledNavItem = styled.li<{
 export const StyledReturn = styled.button<{ $animation?: "intro" | "leaving" }>`
   background-color: transparent;
   width: ${({ $animation }) => ($animation ? "100px" : "0px")};
-  overflow: visible;
-  transition: all ease-in-out 0.2s;
+  overflow: hidden;
+  transition: width 0.3s ease-in-out;
   display: flex;
   justify-content: center;
   align-items: center;
+
   img {
     min-width: 60px;
     max-width: 60px;
     opacity: 0;
     transform: translateY(100%);
+
     ${({ $animation }) =>
       $animation === "intro"
         ? css`

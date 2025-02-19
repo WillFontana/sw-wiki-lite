@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { StyledInputWrapper } from "../../components/Form/Input/styles";
+import { StyledButton } from "../../components/Buttons/Button/styles";
 
 export const StyledRegisterContainer = styled.div`
   display: flex;
@@ -29,6 +30,9 @@ export const StyledRegisterForm = styled.form`
   box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
   ${StyledInputWrapper} {
     margin-top: 20px;
+  }
+  ${StyledButton} {
+    margin-top: 25px;
   }
 `;
 

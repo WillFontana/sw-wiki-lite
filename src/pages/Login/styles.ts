@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { StyledButton } from "../../components/Buttons/Button/styles";
 
 export const LoginContainer = styled.div`
   display: flex;
@@ -17,6 +18,9 @@ export const LoginCard = styled.div`
   max-width: 400px;
   width: 100%;
   text-align: center;
+  ${StyledButton} {
+    margin-top: 25px;
+  }
 `;
 
 export const LoginTitle = styled.h2`

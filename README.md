@@ -76,3 +76,7 @@ yarn dev | npm run dev
 ### Acessar a Aplicação
 
 Acesse <http://localhost:5173> no navegador.
+
+### Autenticando no sistema
+
+Basta apenas fazer o registro no sistema através da url /register (acessável também pela tela de login), e após o cadastro é só fazer o login.

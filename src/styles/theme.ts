@@ -8,9 +8,9 @@ export const theme = {
     secondaryDark: "#cc2222",
     secondaryLight: "#ff7777",
 
-    glowBlue: "#0077ff",
-    glowGreen: "#00ff00",
-    glowRed: "#ff0000",
+    glowBlue: "#0077ff99",
+    glowGreen: "#00ff0099",
+    glowRed: "#ff000099",
 
     backgroundDark: "#0d0d0d",
     backgroundLight: "#111111",

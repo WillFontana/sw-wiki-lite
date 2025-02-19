@@ -4,15 +4,16 @@ export const StyledCharacterCard = styled.div`
   cursor: pointer;
 
   > p {
-    color: #aaaaaa;
-    font-size: 16px;
+    color: ${({ theme }) => theme.colors.textSecondary};
+    font-size: ${({ theme }) => theme.textSizes.normal};
     transition: all ease-in-out 0.2s;
   }
 
   &:hover {
     > p {
-      color: #00ff00;
-      text-shadow: 0 0 5px #00ff00, 0 0 10px #00cc00, 0 0 15px #008800;
+      color: ${({ theme }) => theme.colors.glowGreen};
+      text-shadow: 0 0 5px ${({ theme }) => theme.colors.glowGreen},
+        0 0 10px #00cc00, 0 0 15px #008800;
     }
   }
 `;

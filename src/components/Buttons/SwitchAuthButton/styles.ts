@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 export const StyledSwitchAuthButton = styled(Link)`
   display: inline-block;
-  margin-top: 25px;
-  font-size: 14px;
-  color: #00aaff;
+  margin-top: ${({ theme }) => theme.spacing.medium};
+  font-size: ${({ theme }) => theme.textSizes.small};
+  color: ${({ theme }) => theme.colors.primary};
   text-transform: uppercase;
   text-decoration: none;
   font-weight: bold;
@@ -13,6 +13,7 @@ export const StyledSwitchAuthButton = styled(Link)`
   cursor: pointer;
 
   &:hover {
-    text-shadow: 0px 0px 5px #00aaff, 0px 0px 10px #0077ff;
+    text-shadow: 0px 0px 5px ${({ theme }) => theme.colors.primaryLight},
+      0px 0px 10px ${({ theme }) => theme.colors.primaryDark};
   }
 `;

@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 export const StyledButton = styled.button`
   width: 100%;
-  padding: ${({ theme }) => theme.spacing.normal};
+  font-family: ${({ theme }) => theme.fonts.secondary};
+  padding: ${({ theme }) => theme.spacing.small};
   font-size: ${({ theme }) => theme.textSizes.medium};
-  font-weight: bold;
   border: none;
   cursor: pointer;
   border-radius: ${({ theme }) => theme.radius.normal};
@@ -15,7 +15,7 @@ export const StyledButton = styled.button`
   );
   color: ${({ theme }) => theme.colors.textPrimary};
   text-transform: uppercase;
-  box-shadow: 0px 4px 10px ${({ theme }) => theme.colors.primaryLight};
+  box-shadow: 0px 4px 8px ${({ theme }) => theme.colors.primaryLight};
   transition: all 0.3s ease-in-out;
 
   &:hover {
@@ -24,7 +24,7 @@ export const StyledButton = styled.button`
       ${({ theme }) => theme.colors.primaryDark},
       ${({ theme }) => theme.colors.primary}
     );
-    box-shadow: 0px 0px 15px ${({ theme }) => theme.colors.primaryLight};
+    box-shadow: 0px 4px 10px ${({ theme }) => theme.colors.primaryLight};
   }
 
   &:disabled {

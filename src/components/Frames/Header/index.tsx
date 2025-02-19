@@ -9,12 +9,19 @@ import trooperIcon from "../../../assets/icons/stormtrooper.png";
 import cloneIcon from "../../../assets/icons/clone.png";
 import shipIcon from "../../../assets/icons/naboo-ship.png";
 
-const Header: React.FC = () => {
+interface EraOption {
+  key: "prequels" | "classic";
+  label: string;
+  icon: string;
+  side: "light" | "dark";
+}
+
+const Header: React.FC = React.memo(() => {
   const dispatch = useDispatch();
-  const selectedEra = useSelector((state: RootState) => state.era.selectedEra);
   const location = useLocation();
   const navigate = useNavigate();
 
+  const selectedEra = useSelector((state: RootState) => state.era.selectedEra);
   const [animation, setAnimation] = useState<"intro" | "leaving" | undefined>(
     undefined
   );
@@ -29,45 +36,61 @@ const Header: React.FC = () => {
 
   const handleSelectEra = (era: "prequels" | "classic") => {
     if (location.pathname !== "/") {
-      navigate("/");
-      setAnimation("leaving")
+      setAnimation("leaving");
+      setTimeout(() => {
+        navigate("/");
+        setAnimation(undefined);
+        dispatch(setEra(era));
+      }, 300);
+    } else {
+      dispatch(setEra(era));
     }
-    dispatch(setEra(era));
   };
 
   useEffect(() => {
     if (location.pathname !== "/") {
       setAnimation("intro");
     }
-  }, [location]);
+  }, [location.pathname]);
+
+  const eras: EraOption[] = [
+    {
+      key: "prequels",
+      label: "The Clone Wars",
+      icon: cloneIcon,
+      side: "light",
+    },
+    {
+      key: "classic",
+      label: "The Galactic Empire",
+      icon: trooperIcon,
+      side: "dark",
+    },
+  ];
 
   return (
     <StyledHeader>
       <StyledNav>
         <ul>
-          <StyledNavItem
-            $side="light"
-            $active={selectedEra === "prequels"}
-            onClick={() => handleSelectEra("prequels")}
-          >
-            <img src={cloneIcon} /> <p>The clone wars</p>
-          </StyledNavItem>
+          {eras.map(({ key, label, icon, side }) => (
+            <StyledNavItem
+              key={key}
+              $side={side}
+              $active={selectedEra === key}
+              onClick={() => handleSelectEra(key)}
+            >
+              <img src={icon} alt={`${label} Icon`} />
+              <p>{label}</p>
+            </StyledNavItem>
+          ))}
 
           <StyledReturn $animation={animation} onClick={handleBack}>
-            <img src={shipIcon} aria-label="Retornar" />
+            <img src={shipIcon} alt="Return Icon" aria-label="Go back" />
           </StyledReturn>
-
-          <StyledNavItem
-            $side="dark"
-            $active={selectedEra === "classic"}
-            onClick={() => handleSelectEra("classic")}
-          >
-            <img src={trooperIcon} /> <p>The galatic empire</p>
-          </StyledNavItem>
         </ul>
       </StyledNav>
     </StyledHeader>
   );
-};
+});
 
 export default Header;

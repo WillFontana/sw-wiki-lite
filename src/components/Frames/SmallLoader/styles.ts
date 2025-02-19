@@ -1,3 +1,4 @@
+import { theme } from "./../../../styles/theme";
 import styled, { keyframes } from "styled-components";
 
 const rotate = keyframes`
@@ -6,10 +7,10 @@ const rotate = keyframes`
 `;
 
 const changeColor = keyframes`
-  0% { border-top-color: #0077ff; }
-  33% { border-top-color: #00ff00; }
-  66% { border-top-color: #ff0000; }
-  100% { border-top-color: #0077ff; }
+  0% { border-top-color: ${theme.colors.glowBlue}; }
+  33% { border-top-color: ${theme.colors.glowGreen}; }
+  66% { border-top-color: ${theme.colors.glowRed}; }
+  100% { border-top-color: ${theme.colors.glowBlue}; }
 `;
 
 export const StyledLoader = styled.div`
@@ -17,6 +18,6 @@ export const StyledLoader = styled.div`
   height: 40px;
   border-radius: 50%;
   border: 4px solid transparent;
-  border-top: 4px solid #0077ff;
+  border-top: 4px solid ${theme.colors.glowBlue};
   animation: ${rotate} 0.8s linear infinite, ${changeColor} 2s linear infinite;
 `;
