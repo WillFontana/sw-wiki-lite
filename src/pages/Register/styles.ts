@@ -8,54 +8,68 @@ export const StyledRegisterContainer = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: radial-gradient(circle, #0d0d0d, #111111);
-  color: white;
+  background: radial-gradient(
+    circle,
+    ${({ theme }) => theme.colors.backgroundDark},
+    ${({ theme }) => theme.colors.backgroundLight}
+  );
+  color: ${({ theme }) => theme.colors.textPrimary};
 
   h2 {
-    font-family: "Audiowide", sans-serif;
-    color: #ffe81f;
-    font-size: 22px;
-    margin-bottom: 20px;
+    font-family: ${({ theme }) => theme.fonts.secondary};
+    color: ${({ theme }) => theme.colors.textHighlight};
+    font-size: ${({ theme }) => theme.textSizes.large};
+    margin-bottom: ${({ theme }) => theme.spacing.medium};
   }
 `;
 
 export const StyledRegisterForm = styled.form`
   background: rgba(255, 255, 255, 0.05);
-  padding: 32px;
-  border-radius: 12px;
+  padding: ${({ theme }) => theme.spacing.large};
+  border-radius: ${({ theme }) => theme.radius.large};
   backdrop-filter: blur(10px);
   max-width: 500px;
   width: 100%;
   text-align: center;
   box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
+
   ${StyledInputWrapper} {
-    margin-top: 20px;
+    margin-top: ${({ theme }) => theme.spacing.medium};
   }
+
   ${StyledButton} {
-    margin-top: 25px;
+    margin-top: ${({ theme }) => theme.spacing.large};
   }
 `;
 
 export const StyledRegisterButton = styled.button`
   width: 100%;
-  padding: 10px;
-  font-size: 18px;
+  padding: ${({ theme }) => theme.spacing.normal};
+  font-size: ${({ theme }) => theme.textSizes.medium};
   font-weight: bold;
   border: none;
   cursor: pointer;
-  margin-top: 10px;
-  border-radius: 6px;
-  background: linear-gradient(90deg, #00aaff, #0066ff);
-  color: white;
+  margin-top: ${({ theme }) => theme.spacing.medium};
+  border-radius: ${({ theme }) => theme.radius.medium};
+  background: linear-gradient(
+    90deg,
+    ${({ theme }) => theme.colors.primary},
+    ${({ theme }) => theme.colors.primaryDark}
+  );
+  color: ${({ theme }) => theme.colors.textPrimary};
   text-transform: uppercase;
-  box-shadow: 0px 4px 10px rgba(0, 170, 255, 0.5);
+  box-shadow: 0px 4px 10px ${({ theme }) => theme.colors.glowBlue};
   transition: 0.3s;
   display: flex;
   justify-content: center;
-  margin-top: 40px;
+
   &:hover {
-    background: linear-gradient(90deg, #0066ff, #00aaff);
-    box-shadow: 0px 0px 15px rgba(0, 170, 255, 0.8);
+    background: linear-gradient(
+      90deg,
+      ${({ theme }) => theme.colors.primaryDark},
+      ${({ theme }) => theme.colors.primary}
+    );
+    box-shadow: 0px 0px 15px ${({ theme }) => theme.colors.glowBlue};
   }
 
   &:disabled {

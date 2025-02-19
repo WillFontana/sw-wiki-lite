@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { ICharacter } from "../../store/slices/charactersApi";
 import { useGetMovieByIdQuery } from "../../store/slices/moviesApi";
 
-import handleMovieId, { handleMovieSimbol } from "../../utils/movieIds";
+import handleMovieId, { handleMovieSymbol } from "../../utils/movieIds";
 import moviesBanners from "../../utils/moviesBanners";
 
 import CharacterCard from "../../components/Cards/CharacterCard";
@@ -80,7 +80,7 @@ const MovieDetails: React.FC = () => {
       <StyledMovieInfoContainer>
         {!enableInfo ? (
           <OpeningCrawl
-            episode={`Episode ${handleMovieSimbol(Number(id))}`}
+            episode={`Episode ${handleMovieSymbol(Number(id))}`}
             crawl={movie.opening_crawl}
             title={movie.title}
           />
@@ -93,7 +93,7 @@ const MovieDetails: React.FC = () => {
             />
             <div>
               <h1>
-                Star Wars Episode {handleMovieSimbol(Number(id))}: <br />
+                Star Wars Episode {handleMovieSymbol(Number(id))}: <br />
                 <span>{movie.title}</span>
               </h1>
               <h4>Directed by: {movie.director}</h4>

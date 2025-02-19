@@ -2,12 +2,12 @@
 
 ## May the force be with you!!
 
-Bem-vindo ao **Star Wars Wiki Lite**, o projeto desenvolvido para o teste técnico Minha Casa Construida.  
+Projeto desenvolvido para o teste técnico Minha Casa Construida.  
 Este app permite explorar informações sobre os filmes e personagens do universo Star Wars, utilizando a API pública **SWAPI**.
 
 O app foi desenvolvido com foco no uso em desktop, especialmente devido às animações personalizadas e à ênfase em demonstrar competências técnicas. O objetivo principal foi destacar habilidades como lógica de programação, consumo de APIs e a implementação de recursos avançados de front-end.
 
-Preciso dizer que foi uma experiência muito divertida e gratificante criar este projeto. Poder trabalhar com um tema que eu gosto tanto (Star Wars) tornou o processo ainda mais legal. Além disso, foi ótimo poder explorar tecnologias modernas, que muitas vezes são difíceis de encontrar em projetos mais legados.
+Preciso dizer que foi uma experiência muito gratificante criar este projeto. Poder trabalhar com um tema que eu gosto tanto (Star Wars) tornou o processo ainda mais legal. Além disso, foi ótimo poder explorar tecnologias modernas e novos padrões, que muitas vezes são difíceis de encontrar em projetos mais legados.
 
 ---
 

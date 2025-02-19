@@ -1,14 +1,18 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { useNavigate } from "react-router-dom";
+
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { registerUser } from "../../services/authService";
+
 import Input from "../../components/Form/Input";
 import Password from "../../components/Form/Password";
-import { StyledRegisterContainer, StyledRegisterForm } from "./styles";
-import { registerUser } from "../../services/authService";
 import SwitchAuthButton from "../../components/Buttons/SwitchAuthButton";
 import Button from "../../components/Buttons/Button";
+
+import { StyledRegisterContainer, StyledRegisterForm } from "./styles";
 
 const registerSchema = z
   .object({
@@ -16,7 +20,8 @@ const registerSchema = z
     email: z.string().email("Invalid email").nonempty("Email is required"),
     userPassword: z
       .string()
-      .min(6, "Password must be at least 6 characters long"),
+      .min(6, "Password must be at least 6 characters long")
+      .nonempty("Password is required"),
     confirmPassword: z.string().nonempty("Confirm Password is required"),
     birthDate: z.string().nonempty("Date of Birth is required"),
   })
@@ -32,7 +37,7 @@ const Register: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
   });
@@ -64,9 +69,17 @@ const Register: React.FC = () => {
         />
         <Input
           label="Email"
+          type="email"
           {...register("email")}
           error={errors.email?.message}
         />
+        <Input
+          label="Date of Birth"
+          type="date"
+          {...register("birthDate")}
+          error={errors.birthDate?.message}
+        />
+
         <Password
           label="Password"
           {...register("userPassword")}
@@ -77,14 +90,10 @@ const Register: React.FC = () => {
           {...register("confirmPassword")}
           error={errors.confirmPassword?.message}
         />
-        <Input
-          type="date"
-          label="Date of Birth"
-          {...register("birthDate")}
-          error={errors.birthDate?.message}
-        />
 
-        <Button type="submit">Sign Up</Button>
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Submitting..." : "Sign Up"}
+        </Button>
 
         <SwitchAuthButton url="/login">Login</SwitchAuthButton>
       </StyledRegisterForm>

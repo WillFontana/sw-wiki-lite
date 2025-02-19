@@ -1,14 +1,20 @@
 import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { isAuthenticated, loginUser } from "../../services/authService";
+
+
+import Button from "../../components/Buttons/Button";
+import SwitchAuthButton from "../../components/Buttons/SwitchAuthButton";
 import Input from "../../components/Form/Input";
 import Password from "../../components/Form/Password";
-import { LoginContainer, LoginCard, LoginTitle } from "./styles";
-import { loginUser } from "../../services/authService";
-import { useLocation, useNavigate } from "react-router-dom";
-import SwitchAuthButton from "../../components/Buttons/SwitchAuthButton";
-import Button from "../../components/Buttons/Button";
+
+
+import { LoginCard, LoginContainer, LoginTitle } from "./styles";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email").nonempty("Email is required"),
@@ -37,8 +43,7 @@ const Login: React.FC = () => {
   });
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
+    if (isAuthenticated()) {
       navigate("/");
     }
   }, [navigate]);

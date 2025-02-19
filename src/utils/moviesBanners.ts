@@ -5,7 +5,7 @@ import ep4 from "../assets/movies/ep4.jpg";
 import ep5 from "../assets/movies/ep5.jpg";
 import ep6 from "../assets/movies/ep6.jpg";
 
-const moviesBanners: { [key: number]: string } = {
+const moviesBanners: Record<number, string> = {
   1: ep1,
   2: ep2,
   3: ep3,
