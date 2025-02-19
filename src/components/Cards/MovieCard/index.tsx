@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { IMovie } from "../../../store/slices/moviesApi";
 
 import moviesBanners from "../../../utils/moviesBanners";
+
 import {
   StyledMovieBanner,
   StyledMovieCard,

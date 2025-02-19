@@ -3,7 +3,7 @@ import { StyledCrawl, StyledCrawlContainer } from "./styles";
 
 interface IOpeningCrawl {
   title: string;
-  episode: number;
+  episode: string;
   crawl: string;
 }
 
@@ -13,7 +13,7 @@ const OpeningCrawl: React.FC<IOpeningCrawl> = React.memo(({ title, crawl, episod
   return (
     <StyledCrawlContainer>
       <StyledCrawl>
-        <h2>Episode {episode}</h2>
+        <h2>{episode}</h2>
         <h1>{title}</h1>
         <p>{formattedCrawl}</p>
       </StyledCrawl>

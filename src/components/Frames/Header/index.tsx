@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+
 import { RootState } from "../../../store";
 import { setEra } from "../../../store/slices/eraSlice";
-import { StyledHeader, StyledNav, StyledNavItem, StyledReturn } from "./styles";
 
-import trooperIcon from "../../../assets/icons/stormtrooper.png";
 import cloneIcon from "../../../assets/icons/clone.png";
 import shipIcon from "../../../assets/icons/naboo-ship.png";
+import trooperIcon from "../../../assets/icons/stormtrooper.png";
+
+import { StyledHeader, StyledNav, StyledNavItem, StyledReturn } from "./styles";
+
 
 interface EraOption {
   key: "prequels" | "classic";

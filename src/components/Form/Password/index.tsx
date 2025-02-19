@@ -1,5 +1,6 @@
-import { Eye, EyeClosed } from "phosphor-react";
 import { forwardRef, useState } from "react";
+import { Eye, EyeClosed } from "phosphor-react";
+
 import Input, { IInputProps } from "../Input";
 
 const Password = forwardRef<

@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Loader from "../../components/Frames/Loader";
+
 import { useGetCharacterByIdQuery } from "../../store/slices/charactersApi";
 import { fetchData } from "../../utils/api";
+
+import Loader from "../../components/Frames/Loader";
+import SmallLoader from "../../components/Frames/SmallLoader";
+import NotFound from "../NotFound";
+
 import {
   StyledCharacterDetails,
   StyledFeaturedMovie,
@@ -15,8 +20,6 @@ import {
   StyledVehicle,
   StyledVehicles,
 } from "./styles";
-import SmallLoader from "../../components/Frames/SmallLoader";
-import NotFound from "../NotFound";
 
 interface IFilm {
   title: string;
@@ -107,7 +110,7 @@ const CharacterDetails: React.FC = () => {
   if (isLoading) return <Loader />;
   if (!character)
     return (
-      <NotFound title="Character not avaliable for the moment!" type="empty" />
+      <NotFound title="Character not available for the moment!" type="empty" />
     );
 
   return (

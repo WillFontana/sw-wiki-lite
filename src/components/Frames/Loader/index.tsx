@@ -1,6 +1,8 @@
 import React, { useMemo } from "react";
-import { StyledLightSaber, StyledLoader } from "./styles";
+
 import lightSaber from "../../../assets/icons/lightsaber-realistic.png";
+
+import { StyledLightSaber, StyledLoader } from "./styles";
 
 const Loader = React.memo(() => {
   const saberImage = useMemo(() => lightSaber, []);
