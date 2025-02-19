@@ -1,21 +1,20 @@
-import styled from "styled-components";
+import styled, { DefaultTheme } from "styled-components";
 
 export type ITypes = "page" | "empty" | "error";
 
-const handleTypeColor = (type: ITypes) => {
+const handleTypeColor = (type: ITypes, theme: DefaultTheme) => {
+  const { glowGreen, glowRed, primary } = theme.colors;
   switch (type) {
     case "empty":
-      return "#00ff00";
+      return glowGreen;
     case "error":
-      return "#ff4444";
+      return glowRed;
     default:
-      return "#00aaff";
+      return primary;
   }
 };
 
-export const StyledNoContent = styled.div<{
-  $type: ITypes;
-}>`
+export const StyledNoContent = styled.div<{ $type: ITypes }>`
   position: relative;
   z-index: 2;
   height: 100%;
@@ -25,13 +24,16 @@ export const StyledNoContent = styled.div<{
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  margin-top: ${({$type}) => $type === "page" ? "250px" : "100px"};
+  margin-top: ${({ $type }) => ($type === "page" ? "250px" : "100px")};
+
   img {
     height: 250px;
   }
+
   h2 {
-    font-size: 32px;
-    color: ${({ $type }) => handleTypeColor($type)};
-    font-family: "Audiowide", sans-serif;
+    text-align: center;
+    font-size: ${({ theme }) => theme.textSizes.large};
+    color: ${({ $type, theme }) => handleTypeColor($type, theme)};
+    font-family: ${({ theme }) => theme.fonts.secondary};
   }
 `;

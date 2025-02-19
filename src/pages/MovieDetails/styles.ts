@@ -1,10 +1,10 @@
-import styled, { keyframes } from "styled-components";
+import styled, { DefaultTheme, keyframes } from "styled-components";
 
-const saberGlow = keyframes`
-  0% { box-shadow: 0px 0px 5px #0077ff; } 
-  33% { box-shadow: 0px 0px 5px #00ff00; }
-  66% { box-shadow: 0px 0px 5px #ff0000; }
-  100% { box-shadow: 0px 0px 5px #0077ff; }
+const saberGlow = (theme: DefaultTheme) => keyframes`
+  0% { box-shadow: 0px 0px 8px ${theme.colors.glowBlue}; } 
+  33% { box-shadow: 0px 0px 5px ${theme.colors.glowGreen}; }
+  66% { box-shadow: 0px 0px 8px ${theme.colors.glowRed}; }
+  100% { box-shadow: 0px 0px 5px ${theme.colors.glowBlue}; }
 `;
 
 const bannerAnimation = keyframes`
@@ -21,11 +21,7 @@ const bannerAnimation = keyframes`
 const textAnimation = keyframes`
   0% {
     opacity: 0;
-    transform: translateX(-120px);
-  }
-  50% {
-    opacity: 0;
-    transform: translateX(-60px);
+    transform: translateX(-20px);
   }
   100% {
     opacity: 1;
@@ -46,7 +42,7 @@ const listAnimation = keyframes`
 
 export const StyledMovieDetails = styled.section`
   width: 100%;
-  padding-bottom: 40px;
+  padding-bottom: ${({ theme }) => theme.spacing.large};
 `;
 
 export const StyledMovieInfoContainer = styled.div`
@@ -55,31 +51,35 @@ export const StyledMovieInfoContainer = styled.div`
   overflow: hidden;
   display: flex;
   align-items: flex-start;
+
   > div {
-    margin-left: 40px;
+    margin-left: ${({ theme }) => theme.spacing.medium};
+
     > h1 {
-      font-size: 40px;
-      font-family: "Audiowide", sans-serif;
-      color: #ffe81f;
+      font-size: ${({ theme }) => theme.textSizes.xlarge};
+      font-family: ${({ theme }) => theme.fonts.secondary};
+      color: ${({ theme }) => theme.colors.textHighlight};
       opacity: 0;
       transform: translateX(-120px);
       animation: ${textAnimation} 1s ease-in-out forwards;
-      animation-delay: 1.2s;
-      margin-bottom: 15px;
+      animation-delay: 0.6s;
+      margin-bottom: ${({ theme }) => theme.spacing.small};
     }
+
     > h4 {
-      color: #ffffff;
-      font-size: 20px;
+      color: ${({ theme }) => theme.colors.textPrimary};
+      font-size: ${({ theme }) => theme.textSizes.large};
       opacity: 0;
       transform: translateX(-120px);
       animation: ${textAnimation} 1s ease-in-out forwards;
-      animation-delay: 1.4s;
-      margin-bottom: 10px;
+      animation-delay: 0.8s;
+      margin-bottom: ${({ theme }) => theme.spacing.small};
     }
+
     > p {
-      color: #ffffff;
-      font-size: 16px;
-      margin-top: 20px;
+      color: ${({ theme }) => theme.colors.textPrimary};
+      font-size: ${({ theme }) => theme.textSizes.normal};
+      margin-top: ${({ theme }) => theme.spacing.small};
       opacity: 0;
       transform: translateX(-120px);
       animation: ${textAnimation} 1s ease-in-out forwards;
@@ -94,46 +94,47 @@ export const StyledMovieBanner = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  border-radius: 16px;
+  border-radius: ${({ theme }) => theme.radius.large};
   animation: ${bannerAnimation} 1s ease-in-out forwards;
-  box-shadow: 0px 0px 5px #0077bb44;
+  box-shadow: 0px 0px 5px ${({ theme }) => theme.colors.primaryDark}44;
 `;
 
 export const StyledCharacterContainer = styled.div`
   > h2 {
-    color: #ffffff;
-    font-size: 26px;
-    font-family: "Audiowide", sans-serif;
-    margin-top: 20px;
-    margin-left: 40px;
+    color: ${({ theme }) => theme.colors.textPrimary};
+    font-size: ${({ theme }) => theme.textSizes.large};
+    font-family: ${({ theme }) => theme.fonts.secondary};
+    margin-top: ${({ theme }) => theme.spacing.medium};
+    margin-left: ${({ theme }) => theme.spacing.medium};
   }
 `;
 
-export const StyledLoaderContaier = styled.div`
+export const StyledLoaderContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
-  margin: 20px 0;
+  margin: ${({ theme }) => theme.spacing.medium} 0;
 `;
 
 export const StyledCharactersList = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
+  gap: ${({ theme }) => theme.spacing.medium};
   justify-content: center;
-  margin: 20px 40px 0;
+  margin: ${({ theme }) => theme.spacing.medium}
+    ${({ theme }) => theme.spacing.large} 0;
   animation: ${listAnimation} 1s ease-in-out forwards;
 `;
 
 export const StyledSkipButton = styled.button`
-  padding: 10px 20px;
-  font-size: 18px;
+  padding: ${({ theme }) => `${theme.spacing.small} ${theme.spacing.medium}`};
+  font-size: ${({ theme }) => theme.textSizes.medium};
   font-weight: bold;
-  color: white;
+  color: ${({ theme }) => theme.colors.textPrimary};
   background: transparent;
-  border: 2px solid white;
+  border: 2px solid ${({ theme }) => theme.colors.textPrimary};
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.radius.medium};
   min-width: 200px;
   transition: all 0.3s ease-in-out;
   text-transform: uppercase;
@@ -141,8 +142,9 @@ export const StyledSkipButton = styled.button`
   overflow: hidden;
   display: flex;
   justify-content: center;
-  margin: 40px auto;
+  margin: ${({ theme }) => theme.spacing.large} auto;
+
   &:hover {
-    animation: ${saberGlow} 1s linear infinite;
+    animation: ${({ theme }) => saberGlow(theme)} 1s linear infinite;
   }
 `;

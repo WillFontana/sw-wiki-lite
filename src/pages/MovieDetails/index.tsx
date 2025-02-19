@@ -1,24 +1,28 @@
-import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import dayjs from "dayjs";
+
+import { ICharacter } from "../../store/slices/charactersApi";
+import { useGetMovieByIdQuery } from "../../store/slices/moviesApi";
+
+import handleMovieId, { handleMovieSimbol } from "../../utils/movieIds";
+import moviesBanners from "../../utils/moviesBanners";
+
 import CharacterCard from "../../components/Cards/CharacterCard";
 import Loader from "../../components/Frames/Loader";
 import OpeningCrawl from "../../components/Frames/OpeningCrawl";
-import { ICharacter } from "../../store/slices/charactersApi";
-import { useGetMovieByIdQuery } from "../../store/slices/moviesApi";
-import handleMovieId, { handleMovieSimbol } from "../../utils/movieIds";
-import moviesBanners from "../../utils/moviesBanners";
+import SmallLoader from "../../components/Frames/SmallLoader";
+import NotFound from "../NotFound";
+
 import {
   StyledCharacterContainer,
   StyledCharactersList,
-  StyledLoaderContaier,
+  StyledLoaderContainer,
   StyledMovieBanner,
   StyledMovieDetails,
   StyledMovieInfoContainer,
   StyledSkipButton,
 } from "./styles";
-import SmallLoader from "../../components/Frames/SmallLoader";
-import NotFound from "../NotFound";
 
 const MovieDetails: React.FC = () => {
   const { id } = useParams();
@@ -28,65 +32,49 @@ const MovieDetails: React.FC = () => {
     isError,
   } = useGetMovieByIdQuery(handleMovieId(Number(id)));
 
-  const [enableInfo, setEnableInfo] = useState<boolean>(false);
-
-  const [charactersLoading, setCharactersLoading] = useState<boolean>(false);
+  const [enableInfo, setEnableInfo] = useState(false);
+  const [charactersLoading, setCharactersLoading] = useState(false);
   const [characters, setCharacters] = useState<ICharacter[]>([]);
 
-  const handleSkip = () => {
-    setEnableInfo(true);
-  };
+  useEffect(() => {
+    if (!movie?.characters) return;
 
-  useEffect(
-    function getCharacters() {
-      if (!movie?.characters) return;
-      const fetchCharacters = async () => {
-        setCharactersLoading(true);
-        try {
-          const characterPromises = movie.characters.map(async (url) => {
+    const fetchCharacters = async () => {
+      setCharactersLoading(true);
+      try {
+        const characterData = await Promise.all(
+          movie.characters.map(async (url) => {
             const response = await fetch(url);
             const data = await response.json();
-            const id = url.split("/").slice(-2, -1)[0];
+            return { ...data, id: url.split("/").slice(-2, -1)[0] };
+          })
+        );
 
-            return { ...data, id };
-          });
+        setCharacters(characterData);
+      } catch (error) {
+        console.error("Error fetching characters:", error);
+      } finally {
+        setCharactersLoading(false);
+      }
+    };
 
-          const characterData = await Promise.all(characterPromises);
-          setCharacters(characterData);
-        } catch (error) {
-          console.log(error);
-        } finally {
-          setCharactersLoading(false);
-        }
-      };
-
-      fetchCharacters();
-    },
-    [movie]
-  );
-
-  useEffect(() => {
-    console.log(movie);
+    fetchCharacters();
   }, [movie]);
 
-  useEffect(
-    function renderContent() {
-      if (!enableInfo) {
-        setTimeout(() => {
-          setEnableInfo(true);
-        }, 16000);
-      }
-    },
-    [movie]
-  );
+  useEffect(() => {
+    if (!enableInfo) {
+      setTimeout(() => setEnableInfo(true), 16000);
+    }
+  }, [enableInfo]);
 
   if (isLoading) return <Loader />;
   if (isError)
-    return <NotFound type="error" title="Oops! Looks like an error occured!" />;
-  if (!movie)
     return (
-      <NotFound type="empty" title="Movie not avaliable for the momment!" />
+      <NotFound type="error" title="Oops! Looks like an error occurred!" />
     );
+  if (!movie)
+    return <NotFound type="empty" title="Movie not available at the moment!" />;
+
   return (
     <StyledMovieDetails>
       <StyledMovieInfoContainer>
@@ -97,9 +85,6 @@ const MovieDetails: React.FC = () => {
             title={movie.title}
           />
         ) : (
-          <></>
-        )}
-        {enableInfo ? (
           <>
             <StyledMovieBanner
               style={{
@@ -108,7 +93,7 @@ const MovieDetails: React.FC = () => {
             />
             <div>
               <h1>
-                Star Wars Episode {handleMovieSimbol(Number(id))}: <br />{" "}
+                Star Wars Episode {handleMovieSimbol(Number(id))}: <br />
                 <span>{movie.title}</span>
               </h1>
               <h4>Directed by: {movie.director}</h4>
@@ -119,37 +104,30 @@ const MovieDetails: React.FC = () => {
               <p>{movie.opening_crawl}</p>
             </div>
           </>
-        ) : (
-          <></>
         )}
       </StyledMovieInfoContainer>
-      {enableInfo ? (
+
+      {enableInfo && (
         <StyledCharacterContainer>
           <h2>Main characters</h2>
-          {charactersLoading && !characters.length ? (
-            <StyledLoaderContaier>
+          {charactersLoading && !characters.length && (
+            <StyledLoaderContainer>
               <SmallLoader />
-            </StyledLoaderContaier>
-          ) : (
-            <></>
+            </StyledLoaderContainer>
           )}
           <StyledCharactersList>
-            {characters.length > 0 ? (
+            {characters.length > 0 &&
               characters.map((character) => (
                 <CharacterCard key={character.name} {...character} />
-              ))
-            ) : (
-              <></>
-            )}
+              ))}
           </StyledCharactersList>
         </StyledCharacterContainer>
-      ) : (
-        <></>
       )}
-      {!enableInfo ? (
-        <StyledSkipButton onClick={handleSkip}>Skip intro</StyledSkipButton>
-      ) : (
-        <></>
+
+      {!enableInfo && (
+        <StyledSkipButton onClick={() => setEnableInfo(true)}>
+          Skip intro
+        </StyledSkipButton>
       )}
     </StyledMovieDetails>
   );
