@@ -1,15 +1,16 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
+import { createRoot } from "react-dom/client";
+import { ThemeProvider } from "styled-components";
 
 import { GlobalStyles } from "./styles/GlobalStyles.ts";
-import "./styles/reset.css";
-
-import App from "./App.tsx";
 
 import { store } from "./store";
 import { theme } from "./styles/theme.ts";
-import { ThemeProvider } from "styled-components";
+
+import "./styles/reset.css";
+
+import App from "./App";
 import SkyParallax from "./components/Frames/SkyParallax/index.tsx";
 
 createRoot(document.getElementById("root")!).render(
