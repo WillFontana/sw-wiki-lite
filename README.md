@@ -9,6 +9,8 @@ O app foi desenvolvido com foco no uso em desktop, especialmente devido às anim
 
 Preciso dizer que foi uma experiência muito gratificante criar este projeto. Poder trabalhar com um tema que eu gosto tanto (Star Wars) tornou o processo ainda mais legal. Além disso, foi ótimo poder explorar tecnologias modernas e novos padrões, que muitas vezes são difíceis de encontrar em projetos mais legados.
 
+Como a Api tem as respostas apenas em inglês o sistema foi adaptado para ficar mais coerente como um todo.
+
 ---
 
 ## Tecnologias Utilizadas
@@ -59,8 +61,8 @@ Endpoints principais utilizados:
 ### Clonar o Repositório
 
 ```sh
-git clone https://github.com/seu-usuario/star-wars-explorer.git
-cd star-wars-explorer
+git clone https://github.com/WillFontana/sw-wiki-lite
+cd sw-wiki-lite
 ```
 
 ### Instalar dependências
@@ -81,4 +83,4 @@ Acesse <http://localhost:5173> no navegador.
 
 ### Autenticando no sistema
 
-Basta apenas fazer o registro no sistema através da url /register (acessável também pela tela de login), e após o cadastro é só fazer o login.
+Basta apenas registrar o usuário no sistema através da url /register (acessável também pela tela de login), e após o cadastro é só realizar o login.
